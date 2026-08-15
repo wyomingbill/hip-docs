@@ -1,0 +1,586 @@
+{
+  "d21_trials": [
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    },
+    {
+      "temp0_result_present": true,
+      "temp0_changes": [],
+      "retried": true,
+      "retry_changes": []
+    }
+  ],
+  "corpus_results": [
+    {
+      "owner": "bill",
+      "utterance": "I like black coffee.",
+      "attribute": "preference",
+      "note": "control (D-15)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "preference",
+          "subject": null,
+          "old_value": null,
+          "new_value": "black coffee"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "Sometimes I like it frothed with milk.",
+      "attribute": "preference",
+      "note": "control (D-15)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "preference",
+          "subject": null,
+          "old_value": null,
+          "new_value": "frothed with milk"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "You know, I like having coffee in the morning.",
+      "attribute": "preference",
+      "note": "control (D-15)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "preference",
+          "subject": null,
+          "old_value": null,
+          "new_value": "coffee in the morning"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "sam",
+      "utterance": "I take atorvastatin 20mg every morning.",
+      "attribute": "medication",
+      "note": "G1 case (I-10)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "medication",
+          "subject": null,
+          "old_value": null,
+          "new_value": "atorvastatin 20mg every morning"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "Ray switched from metformin to Jardiance 10mg last week.",
+      "attribute": "medication",
+      "note": "cross-principal, known-good (three_zone_demo.T04)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "update",
+          "attribute": "medication",
+          "subject": "ray",
+          "old_value": "metformin 500mg twice daily",
+          "new_value": "Jardiance 10mg"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "sam",
+      "utterance": "I'm allergic to shellfish.",
+      "attribute": "allergy",
+      "note": "direct, simple",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "allergy",
+          "subject": null,
+          "old_value": null,
+          "new_value": "shellfish"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "I have a dentist appointment next Tuesday at 3pm.",
+      "attribute": "appointment",
+      "note": "direct",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "appointment",
+          "subject": null,
+          "old_value": null,
+          "new_value": "dentist appointment next Tuesday at 3pm"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "I prefer window seats on trains.",
+      "attribute": "preference",
+      "note": "direct (PW027-style)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "preference",
+          "subject": null,
+          "old_value": null,
+          "new_value": "window seats on trains"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "sam",
+      "utterance": "I've started taking a fish oil supplement every night.",
+      "attribute": "medication",
+      "note": "narrative",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "medication",
+          "subject": null,
+          "old_value": null,
+          "new_value": "fish oil supplement"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "Ray's cardiologist moved his appointment to next month.",
+      "attribute": "appointment",
+      "note": "cross-principal, narrative",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "appointment",
+          "subject": "ray",
+          "old_value": null,
+          "new_value": "cardiology appointment next month"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "I switched my yoga class from Tuesdays to Thursdays.",
+      "attribute": "schedule",
+      "note": "direct update",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "update",
+          "attribute": "schedule",
+          "subject": null,
+          "old_value": "yoga class Tuesdays at 7am",
+          "new_value": "yoga class Thursdays at 7am"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "I'm eating vegetarian meals on weekdays now.",
+      "attribute": "dietary/preference",
+      "note": "DIAG p2-i019 reproduction, maya side (i016 landed historically)",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "medication",
+          "subject": "ray",
+          "old_value": null,
+          "new_value": "metformin 500mg twice daily"
+        },
+        {
+          "action": "add",
+          "attribute": "medication",
+          "subject": null,
+          "old_value": null,
+          "new_value": "lisinopril each morning"
+        },
+        {
+          "action": "add",
+          "attribute": "household",
+          "subject": null,
+          "old_value": null,
+          "new_value": "trash pickup is Wednesday"
+        },
+        {
+          "action": "add",
+          "attribute": "schedule",
+          "subject": null,
+          "old_value": null,
+          "new_value": "no appointments before 9am"
+        },
+        {
+          "action": "add",
+          "attribute": "dietary",
+          "subject": null,
+          "old_value": null,
+          "new_value": "vegetarian meals on weekdays"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "sam",
+      "utterance": "I'm eating vegetarian meals on weekdays now.",
+      "attribute": "dietary/preference",
+      "note": "DIAG p2-i019 reproduction, sam side (i019 MISSED historically) -- same utterance as maya's, different context complexity",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "dietary",
+          "subject": null,
+          "old_value": null,
+          "new_value": "vegetarian meals on weekdays"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "I'm allergic to penicillin.",
+      "attribute": "allergy",
+      "note": "direct, simplest context",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "allergy",
+          "subject": null,
+          "old_value": null,
+          "new_value": "penicillin"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "Trash pickup is now Thursday instead of Wednesday.",
+      "attribute": "household",
+      "note": "supersede, direct",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "update",
+          "attribute": "household",
+          "subject": null,
+          "old_value": "Wednesday",
+          "new_value": "Thursday"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "I no longer take ibuprofen for headaches.",
+      "attribute": "medication",
+      "note": "retract-shaped",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "medication",
+          "subject": null,
+          "old_value": null,
+          "new_value": "no longer take ibuprofen for headaches"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "My allergy to latex has gotten worse.",
+      "attribute": "allergy",
+      "note": "update, narrative",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "allergy",
+          "subject": null,
+          "old_value": null,
+          "new_value": "latex"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "sam",
+      "utterance": "My dentist appointment got moved to next Friday.",
+      "attribute": "appointment",
+      "note": "add, narrative",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "appointment",
+          "subject": null,
+          "old_value": null,
+          "new_value": "next Friday"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "My employer just moved our office downtown.",
+      "attribute": "employer",
+      "note": "direct",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "employer",
+          "subject": null,
+          "old_value": null,
+          "new_value": "office moved downtown"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "I now have a standing therapy appointment every other Tuesday.",
+      "attribute": "appointment",
+      "note": "recurring, direct",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "appointment",
+          "subject": null,
+          "old_value": null,
+          "new_value": "standing therapy appointment every other Tuesday"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "My brother James is coming to stay with us next month.",
+      "attribute": "relationship",
+      "note": "new named person",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "relationship",
+          "subject": "James",
+          "old_value": null,
+          "new_value": "brother"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "sam",
+      "utterance": "We've set up a joint savings account for Dad's care costs.",
+      "attribute": "financial",
+      "note": "cross-principal, narrative",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "financial",
+          "subject": "dad",
+          "old_value": null,
+          "new_value": "joint savings account for Dad's care costs"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "bill",
+      "utterance": "I've been diagnosed with mild hypertension.",
+      "attribute": "health_condition",
+      "note": "direct",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "health_condition",
+          "subject": null,
+          "old_value": null,
+          "new_value": "mild hypertension"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    },
+    {
+      "owner": "maya",
+      "utterance": "Ray's fall risk appointment got rescheduled to the 20th.",
+      "attribute": "appointment",
+      "note": "cross-principal, similar shape to D-21 but clean canonical mapping",
+      "temp0_result_present": true,
+      "temp0_changes": [
+        {
+          "action": "add",
+          "attribute": "appointment",
+          "subject": "ray",
+          "old_value": null,
+          "new_value": "fall risk appointment on the 20th"
+        }
+      ],
+      "retried": false,
+      "retry_changes": null
+    }
+  ]
+}

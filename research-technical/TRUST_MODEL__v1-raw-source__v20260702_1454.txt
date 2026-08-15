@@ -1,0 +1,61 @@
+# Trust Model v1
+
+## 1. Scope and purpose
+
+This document records the trust model for the HIP harness as it stands at the close of today's architecture session. It states which components we treat as trusted, which we treat as untrusted, and the rules that decide how data may travel between them. It is a statement of present design and intent rather than a verification report, so it does not claim that every control named here is already built, deployed, and tested. Where a decision has been deferred, it appears in the final section so that a reader can always tell a settled choice apart from a question we still owe an answer to.
+
+## 2. Trust boundaries
+
+We draw a single boundary that we call the lattice, and trust follows from which side of that boundary a component sits on. Inside the lattice live three trusted components. The first is the CPE device in the user's home, which we trust because it is physical hardware under the user's own control and is the place where voice capture and playback happen. The second is the CC GPU enclave, which we trust because it is the only place where sensitive plaintext is ever allowed to exist, and because its design keeps that plaintext away from everyone including the people who operate it. The third is the Zep memory service, which we trust because it holds the user's facts on their behalf and lives wholly inside the lattice, storing those facts only in encrypted form.
+
+Outside the lattice sit the untrusted parties. The frontier models are untrusted because they are operated by others and we cannot constrain what they retain or how they reuse what they receive. The search providers are untrusted for the same reason, and because a query string alone can disclose intent. Any third party API falls into the same category by default; absent a specific decision to the contrary, anything outside the lattice is untrusted.
+
+The CC enclave model is the heart of why we are willing to trust that one component with plaintext. Sensitive data is encrypted at rest at all times. Plaintext comes into being only for the duration of inference, and only inside the enclave itself, where it is needed so that a model can read and reason over it. The moment inference ends, the plaintext is gone and only ciphertext remains. The operator who runs the enclave hardware never sees plaintext at any point; the enclave is built so that the people maintaining it have no path to the cleartext that passes through it. Trust in the enclave is therefore trust in a narrow and auditable property rather than trust in the good behavior of an operator.
+
+## 3. Allowed data flows
+
+Two classes of data movement are allowed without any further check. The first is the flow of encrypted facts to and from the enclave. Facts may travel from Zep into the enclave so that a model can use them during inference, and new or updated facts may travel back out to Zep for storage, and in both directions the data is encrypted while it moves and is only ever cleartext inside the enclave. The second allowed flow is voice input and output on the device. Audio captured by the CPE device and audio played back to the user stay on the device and inside the lattice, so this flow never crosses the boundary and needs no special permission.
+
+## 4. Denied data flows
+
+One flow is denied outright. Plaintext facts must never leave the lattice without the user's consent. There is no configuration, convenience feature, or fallback path that allows cleartext belonging to the user to cross the boundary on its own. If a plaintext fact is to leave the lattice at all, it can only do so through a consent required flow described in the next section, and never silently.
+
+## 5. Consent required flows
+
+Some flows are neither freely allowed nor flatly denied; they are permitted only when the user agrees in the moment. Any query that is to be sent to a frontier model is a consent required flow, because such a query leaves the lattice and reaches an untrusted party. Any web search is likewise a consent required flow, for the same reason and because the query text itself can reveal the user's intent to an outside provider.
+
+The consent mechanism is deliberately lightweight. When a flow would cross the boundary, the system asks the user out loud with a voice prompt and proceeds only on a clear answer. While such a flow is active there is a session indicator that tells the user, for the current session only, that traffic is leaving the lattice. We keep no persistent exit log. This is a conscious choice rather than an oversight: a durable record of when queries left the lattice would itself be a trail of timestamps, and timestamps are reidentifying, so a log meant to improve safety would quietly become a new place where the user could be tracked. The session indicator gives the user awareness in the moment without leaving behind a record that works against them later.
+
+## 6. Fail closed behavior
+
+When the system cannot be sure it can protect the user, it stops rather than guesses. If the CC enclave is unreachable and the user has asked something that touches sensitive data, the system fails closed: it declines to answer through any path that would expose that data, rather than routing the request to an untrusted party to keep the conversation moving. So that the user is not simply left with silence, the response includes a copy produced by the local model, which can speak to the situation without reaching across the boundary. Throughout, there are no silent failures. Whenever the system declines, degrades, or falls back, it says so plainly to the user, so that a refusal is never mistaken for a normal answer and the user always knows when something did not happen.
+
+## 7. Attack vectors
+
+### Prompt injection
+
+Prompt injection is the risk that text drawn from memory, from a document, or from a tool result carries instructions that try to redirect the model away from the user's intent, for example by telling it to disclose facts or to ignore the consent rules. The current mitigation is the boundary itself together with the consent required flows: even a model that has been steered cannot send plaintext out of the lattice without a consent flow firing, which limits what a successful injection can achieve. The open gap is that we do not yet have strong separation between trusted instructions and untrusted content inside a single inference, so an injection could still influence the answer the user hears even when it cannot exfiltrate data.
+
+### Memory poisoning
+
+Memory poisoning is the risk that false or hostile facts are written into the Zep store so that later answers are shaped by them, whether to mislead the user or to set up a later disclosure. The current mitigation is that all writes to memory originate inside the lattice and the store holds only encrypted facts, so an outside party has no direct path to plant content. The open gap is that we do not yet validate or attribute facts at write time, so a fact introduced through a compromised or confused inference could persist and be trusted on later turns.
+
+### Speaker spoofing
+
+Speaker spoofing is the risk that someone other than the user speaks to the device, or replays recorded audio, and is treated as the user, thereby gaining access to the user's facts and consent authority. The current mitigation rests on the device being physical hardware in the user's home, which raises the bar for an attacker to be present at all. The open gap is that we do not yet bind voice input to a verified speaker identity, so anyone with access to the device, or a convincing recording, could currently be taken for the user.
+
+### Retrieval leakage
+
+Retrieval leakage is the risk that the act of fetching facts for an inference exposes more than intended, for example by pulling sensitive facts into a context that is later allowed to leave the lattice. The current mitigation is that retrieval feeds the enclave, where plaintext is confined, and that nothing leaves without an allowed or consented flow. The open gap is that we do not yet scope retrieval tightly to the question at hand, so an inference may receive more facts than it needs, widening the blast radius if a later step is compromised.
+
+### Answer level leakage
+
+Answer level leakage is the risk that a response which is itself allowed to leave the lattice, such as a consented frontier query, carries within its words sensitive facts that the user did not mean to share. The current mitigation is that crossing the boundary requires consent, which gives the user a moment to decline. The open gap is that consent today is about the act of leaving rather than about the specific content leaving, so a user who consents to a search may not realize how much sensitive detail the outgoing text contains.
+
+### Log correlation
+
+Log correlation is the risk that records kept across the system, even records that seem harmless on their own, can be lined up by time or sequence to reidentify the user or reconstruct what they asked. The current mitigation is the decision described above to keep no persistent exit log, which removes one of the most revealing trails before it can be correlated. The open gap is that other components may still emit operational logs, and we have not yet audited those for fields, and especially timestamps, that would allow the same kind of correlation we took care to avoid at the boundary.
+
+## 8. Open items
+
+Several decisions were deliberately left for later milestones rather than forced in this session. We have not yet decided how to separate trusted instructions from untrusted content within a single inference, which is the durable answer to prompt injection rather than the partial containment we rely on today. We have not yet chosen a method for validating or attributing facts as they are written to memory, which is what would close the memory poisoning gap. We have not yet selected a way to bind voice input to a verified speaker, which speaker spoofing will require. We have not yet defined how retrieval should be scoped to a question so that an inference receives only the facts it needs. We have not yet decided whether and how to inspect outgoing content for sensitive detail before a consented flow leaves the lattice, which is what answer level leakage demands. Finally, we have not yet completed an audit of operational logging across all components for fields that would permit correlation. Each of these is recorded here so that a future milestone can pick it up with full knowledge of why it was deferred.

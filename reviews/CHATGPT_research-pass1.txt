@@ -1,0 +1,466 @@
+Bottom line
+The design is not yet safe enough to support its central promises.
+Three problems are fundamental:
+	1	“Confirmed” conflates truth, consent, authority, and provenance. A person can confirm a false fact, refuse to confirm a true one, be coerced into confirming, or lack authority over a relational fact.
+	2	“Recognize and route, never adjudicate” is too passive for imminent danger. You should avoid deciding whether an accusation is true, but you cannot avoid assessing immediate risk.
+	3	Strict per-member isolation is not currently true. With operator-controlled hardware, operator-accessible processing, no per-member cryptographic keys, and an abusive account holder, you have policy isolation—not defensible cryptographic isolation.
+The rest of the system is built on those unresolved foundations.
+
+1. Confirmation subroutine
+Where it breaks
+A. There often is no single authorized confirmer
+Many household statements are not facts owned by one person.
+Examples:
+	•	“Mom and Dad are having marital problems.”
+	•	“Susan takes better care of Dad than Michael does.”
+	•	“Dad becomes confused after dinner.”
+	•	“The family always spends Christmas in Vermont.”
+	•	“Ben is frightened of his stepfather.”
+	•	“Grandma wanted the house to remain in the family.”
+	•	“The children are closer to their mother.”
+Who confirms these?
+	•	The subject may not know.
+	•	Multiple subjects may disagree.
+	•	The statement may describe a relationship rather than an individual.
+	•	The author may be the only witness.
+	•	The subject may have an incentive to deny it.
+	•	Nobody may have authority to declare one interpretation canonical.
+You need to stop modeling confirmation as a transition from unconfirmed fact → confirmed fact. The proper object is an attributed claim:
+Susan asserts that Dad becomes confused after dinner, based on her observations during the past month.
+Dad can confirm or dispute Susan’s description, but he cannot erase her observation. Susan cannot establish Dad’s internal state. The system should preserve both perspectives without merging them into one supposed truth.
+B. Confirmation does not establish truth
+A confirmation establishes only that:
+	•	a particular actor,
+	•	at a particular time,
+	•	under uncertain conditions,
+	•	affirmed a particular representation.
+It does not establish objective accuracy.
+Your KYC analogy is misleading. KYC generally attempts to validate identity or documents against external evidence. You are asking family members to validate ambiguous social reality. That is closer to provenance management, belief revision, multi-informant assessment, and noisy-label learning than KYC.
+Research on surrogate decision-making shows the problem plainly: in one systematic review, surrogates predicted patient treatment preferences correctly only about 68% of the time, and patient designation of the surrogate did not materially solve the problem. Accuracy was particularly poor in dementia scenarios. (JAMA Network("https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/409986"))
+C. “Never dead-ends” is false
+A fact can have no reachable authorized confirmer:
+	•	The person is dead.
+	•	The person is estranged and will never enroll.
+	•	The person refuses to interact with the system.
+	•	The claim concerns a visitor or former household member.
+	•	The person’s identity cannot be resolved.
+	•	Two legal guardians dispute who has authority.
+	•	Capacity fluctuates and no valid surrogate exists.
+	•	A child ages into independent authority but rejects the historical record.
+	•	A jointly held fact has no single decisive subject.
+	•	The proposed confirmer is the alleged abuser.
+	•	The only witness must remain anonymous for safety.
+“Pending indefinitely” is a workflow state, but it is also a semantic dead end. Pretending otherwise means your process will keep pursuing people who have declined, become unreachable, or should not be contacted.
+You need explicit terminal states such as:
+	•	DECLINED
+	•	UNREACHABLE
+	•	NO_AUTHORITY_RESOLVED
+	•	CONTESTED
+	•	AUTHOR_ONLY
+	•	PROXY_ATTESTED
+	•	EXPIRED
+	•	WITHDRAWN
+	•	UNSAFE_TO_CONFIRM
+	•	SUBJECT_DECEASED
+A system that “never gives up” can become coercive.
+D. Confirmation requests can themselves leak private information
+Suppose Susan privately says:
+“I think Michael is drinking again.”
+Sending Michael a confirmation request tells him:
+	•	someone made the claim,
+	•	the system retained it,
+	•	someone in the household may be discussing him,
+	•	potentially which person said it.
+Even a carefully worded prompt may reveal the existence of the allegation. Re-routing through another family member makes the privacy violation worse.
+The confirmation process therefore needs its own information-flow policy. Contextual integrity evaluates privacy through the subject, sender, recipient, information type, and transmission principle—not simply whether the subject eventually approved the data. (Helen Nissenbaum("https://nissenbaum.tech.cornell.edu/papers/Privacy%20and%20Contextual%20Integrity%20-%20Frameworks%20and%20Applications.pdf?utm_source=chatgpt.com"))
+E. A malicious narrator can weaponize the queue
+An abusive or antagonistic narrator can create hundreds of claims:
+	•	“She is mentally unstable.”
+	•	“He forgets his medication.”
+	•	“She cannot manage money.”
+	•	“He lies about where he goes.”
+Even if these remain “unconfirmed,” they can:
+	•	burden the target with confirmation requests,
+	•	establish a derogatory latent profile,
+	•	influence inferred risk,
+	•	contaminate retrieval or summarization,
+	•	become discoverable records,
+	•	reveal that the target is resisting “confirmation.”
+This is a reputation attack and denial-of-service attack against the confirmation mechanism.
+F. Confirmation fatigue will degrade meaning
+Repeated prompts produce habituation and low-attention approvals. Research on repeated consent interactions has found diminished attention through habituation; human-in-the-loop systems must also model noisy and abstaining annotators rather than presuming an always-available reliable oracle. (ACM Digital Library("https://dl.acm.org/doi/fullHtml/10.1145/3372296?utm_source=chatgpt.com"))
+A person tapping “yes” after the fifth reminder may be clearing a queue, not deliberating.
+Required correction
+Separate at least five dimensions:
+	1	Provenance: Who stated or inferred it?
+	2	Epistemic status: Asserted, observed, corroborated, disputed, inferred.
+	3	Storage permission: May the system retain it?
+	4	Audience: Who may retrieve it, and for what purpose?
+	5	Freshness: When does it require revalidation?
+“Confirmed” should not be one field.
+
+2. Seeding and onboarding
+Where it breaks
+A. The narrator becomes the constitutional founder of the household
+The narrator controls:
+	•	who is introduced first,
+	•	how relationships are framed,
+	•	which traditions count,
+	•	which conflicts are omitted,
+	•	who is characterized as dependent,
+	•	who is described as trustworthy,
+	•	which vocabulary becomes the graph ontology.
+That first framing will anchor later interpretation even if claims remain formally unconfirmed.
+A divorced father might describe his teenage daughter as “withdrawn and rebellious.” She might describe herself as avoiding an emotionally unsafe home. Those are not two candidate values for the same field. They are incompatible frames with different power implications.
+The narrator’s claims must therefore be quarantined from personalization about other people until each person establishes an independent profile. Otherwise the narrator has already shaped the system before confirmation occurs.
+B. “Told with pride” is not neutral
+Starting with pride and warmth may improve engagement. It may also lower defenses and increase disclosure before users understand the system’s persistence, legal exposure, or operator access.
+Motivational interviewing supports autonomy, collaboration, nonjudgment, and reflective engagement. But MI is not a collection trick. Its own professional description warns that it requires practice and discipline and should not be used as a technique to get people to do something. (Motivational Interviewing("https://motivationalinterviewing.org/understanding-motivational-interviewing"))
+Using MI-like warmth to increase the yield of an intimate household profile risks becoming manipulative unless the system repeatedly and visibly explains:
+	•	what is being retained,
+	•	who can access it,
+	•	what will not be retained,
+	•	how it can be deleted,
+	•	what the operator can technically see,
+	•	what legal process could compel.
+C. Sensitive topics will not obey your zone order
+Abuse, addiction, grief, sexuality, financial control, self-harm, and family conflict may emerge during the “warm” zone.
+Examples:
+	•	“Our Sunday dinners were important until Dad started throwing things.”
+	•	“We always visit Grandma because Uncle James won’t let her leave.”
+	•	“The children know not to wake Mom when she has been drinking.”
+The safety and privacy systems must be operational from the first utterance. You cannot treat the first zones as low-risk.
+D. Voice-first onboarding excludes and exposes people
+Voice-first creates concrete failures:
+	•	A person with aphasia, hearing loss, speech impairment, or strong accent is misrecognized.
+	•	A cognitively impaired person agrees without understanding.
+	•	Another household member is within earshot.
+	•	The narrator answers for someone who is present.
+	•	A visitor or domestic worker is recorded as background speech.
+	•	Speaker identification assigns the claim to the wrong member.
+	•	A replayed or synthesized voice “confirms” a claim.
+Research on multi-user smart homes has repeatedly found that owners and secondary users have different levels of control even though both generate data, and that current smart-home designs struggle with those interpersonal privacy tensions.
+Voice should be an interface option, not the identity or consent foundation.
+E. Custodian confirmation is not an independent check
+Making the custodian confirm facts they originally supplied adds friction but not epistemic independence.
+Susan states, “Dad wants me to handle all his finances.” Susan, acting as custodian, confirms, “Yes, Dad wants me to handle all his finances.”
+The second interaction does nothing to mitigate exploitation.
+For people with limited capacity, the first presumption should be supported decision-making, not substitution. The Administration for Community Living describes supported decision-making as retaining control with the individual while providing tailored assistance. Capacity should also be treated as decision-specific rather than a permanent global designation. (ACL Administration for Community Living("https://acl.gov/programs/consumer-control/supported-decision-making-program"))
+Where a surrogate is required, you need:
+	•	a legally or procedurally defensible basis for authority,
+	•	scope-specific authority,
+	•	the dependent’s assent where possible,
+	•	respect for dissent,
+	•	conflict-of-interest checks,
+	•	escalation when the surrogate’s interests diverge.
+AMA guidance explicitly recognizes substituted judgment, best-interest standards, state-law variation, assent, and circumstances in which a surrogate’s request should not be honored. (AMA Ed Hub("https://edhub.ama-assn.org/code-of-medical-ethics/module/2843128"))
+F. There is no “complete question set”
+A complete household model does not exist.
+Households include:
+	•	roommates,
+	•	multigenerational families,
+	•	divorced and blended families,
+	•	polyamorous relationships,
+	•	foster children,
+	•	domestic workers,
+	•	rotating caregivers,
+	•	college students who live elsewhere part-time,
+	•	deceased people who remain important,
+	•	pets whose care is distributed,
+	•	relatives who have authority but do not reside there.
+A universal complete questionnaire will embed cultural and family-structure assumptions. You need extensible domains and user-created meanings, not a closed interview canon.
+
+3. Boundary manager
+The basic flaw: engagement is not consent
+“Earn depth” is better than indiscriminate interrogation, but it still treats behavioral engagement as authorization.
+A person may answer at length because they:
+	•	believe the system is ephemeral,
+	•	think the narrator or account holder will see the answer,
+	•	feel pressured to be cooperative,
+	•	are lonely,
+	•	are manic, intoxicated, cognitively impaired, or distressed,
+	•	misunderstand how the information will be used.
+Conversely, short answers may reflect:
+	•	communication style,
+	•	autism or neurodivergence,
+	•	fatigue,
+	•	aphasia,
+	•	language mismatch,
+	•	fear of being overheard,
+	•	depression,
+	•	intimidation by someone nearby.
+The system cannot reliably infer “permission to deepen” from conversational behavior.
+The creepiness objective is underspecified
+“Feels like it knows you, not studies you” is a product aspiration, not an enforceable rule.
+Creepiness depends on:
+	•	who gathered the information,
+	•	how it was gathered,
+	•	when it resurfaces,
+	•	who else is present,
+	•	the purpose for which it is used,
+	•	whether the person expected the flow.
+That is precisely why contextual integrity is stronger than a scalar “depth” model. Privacy is about appropriate flows, not simply quantity or sensitivity. (UW Law Digital Commons("https://digitalcommons.law.uw.edu/wlr/vol79/iss1/10/?utm_source=chatgpt.com"))
+A birthday preference resurfaced during a private conversation may feel helpful. The same preference spoken aloud while an estranged spouse is present may be a violation.
+Behavioral backoff can become hidden psychological profiling
+To decide whether someone is withdrawing, the system must analyze:
+	•	answer length,
+	•	latency,
+	•	topic avoidance,
+	•	sentiment,
+	•	voice characteristics,
+	•	interaction history.
+That analysis is itself intimate profiling. You risk collecting a second-order record—“topics Ben avoids,” “Susan becomes tense when finances are discussed”—that is more sensitive than the original information.
+The boundary manager must not silently write those observations into durable memory.
+The design needs explicit controls
+Behavioral cues can supplement, but not replace:
+	•	“Do not ask me about this again.”
+	•	“This conversation is private and should not be remembered.”
+	•	“Pause memory for ten minutes.”
+	•	“Only use this to answer me now.”
+	•	“Show me what you learned from that conversation.”
+	•	“Delete the inferred preference.”
+	•	“Do not mention this when other people are present.”
+Without visible controls, “backs off at withdrawal” is paternalistic inference masquerading as consent.
+
+4. Safety layer
+“Recognize and route, never adjudicate” is internally contradictory
+To recognize and route, the system must determine at least:
+	•	whether the statement concerns harm,
+	•	whether the speaker is the subject or a third party,
+	•	whether danger is current,
+	•	whether the person is capable of acting,
+	•	whether the setting is safe,
+	•	which resource is appropriate,
+	•	whether emergency intervention may be necessary.
+That is adjudication of risk, even if it is not adjudication of truth or guilt.
+The correct division is:
+Do not adjudicate whether an accusation is true. Do assess whether there is a credible, immediate safety risk requiring action.
+Route-only can cause harm
+Cases where referral alone is inadequate:
+	•	“I took all the pills ten minutes ago.”
+	•	“He is downstairs with a gun.”
+	•	“The baby is not breathing.”
+	•	“My husband is strangling my mother.”
+	•	“I am about to drive into traffic.”
+	•	A child explicitly says they are currently locked in a room without food.
+	•	An elder calls for help while another person can be heard threatening them.
+Current 988 protocols require structured safety assessment and clear intervention parameters at the highest levels of risk. Emergency services are intended as a last, least-invasive option, but passive referral is not treated as sufficient when harm is imminent or in progress. (988 Lifeline("https://988lifeline.org/professionals/best-practices/"))
+You need at least three operational classes:
+State|Appropriate behavior|
+Distress without identified imminent danger|Listen, offer choices, offer private human support, do not interrogate|
+Possible danger or ambiguous risk|Minimal, direct safety check; establish whether the person can safely continue|
+Imminent or in-progress danger|Collaborative least-invasive intervention; emergency escalation when necessary|
+“Do not capture it” is technically implausible
+Before the system decides not to store the disclosure, it may already exist in:
+	•	microphone buffers,
+	•	speech-to-text transcripts,
+	•	model context,
+	•	diagnostic logs,
+	•	crash dumps,
+	•	telemetry,
+	•	abuse-detection traces,
+	•	backups,
+	•	operator support tools,
+	•	observability systems.
+You need a defined ephemeral safety-processing path, not a policy statement that the fact is not captured.
+That path must specify:
+	•	what temporarily exists,
+	•	in which memory domains,
+	•	maximum retention,
+	•	which logs are suppressed,
+	•	whether redacted event metadata remains,
+	•	whether an emergency action is auditable,
+	•	who can access that audit trail.
+Not storing anything also causes continuity failure
+Suppose a teenager discloses escalating self-harm three times over two weeks. If every interaction is discarded, each conversation starts from zero.
+Suppose an elder repeatedly says a caregiver is withholding food. Complete non-retention prevents pattern recognition, safety planning, and continuity of support.
+The solution cannot simply be “store it” because the account holder may be the abuser. You need a safe storage architecture—potentially a member-controlled encrypted safety record or no durable continuity at all. Under your current key architecture, you do not have a trustworthy location for it.
+The account-holder-is-the-abuser case is not merely open
+It invalidates several guarantees.
+An abusive account holder may be able to:
+	•	remove the victim’s access,
+	•	reset credentials,
+	•	inspect notifications,
+	•	access router or operator logs,
+	•	monitor device presence,
+	•	power off or destroy the appliance,
+	•	compel the victim to authenticate,
+	•	overhear spoken safety guidance,
+	•	access support records,
+	•	cause account recovery to transfer control.
+Technology-facilitated abuse already includes using smart-home devices and account-holder privileges to monitor, intimidate, or control another person. (The Hotline("https://www.thehotline.org/resources/technology-facilitated-abuse/?utm_source=chatgpt.com"))
+Until you have independent member credentials, cryptographic separation, safe recovery, and discreet interfaces, the system cannot credibly offer a confidential safety channel inside an abusive household.
+Nonphysical coercion is not an edge case
+Coercive control may involve:
+	•	financial restriction,
+	•	isolation,
+	•	medication control,
+	•	threats involving children or pets,
+	•	sleep deprivation,
+	•	monitoring,
+	•	immigration threats,
+	•	control of communication,
+	•	reputational threats.
+A safety model centered on physical injury will miss much of the abuse the account-holder threat actually creates.
+Dependent abuse cannot be reduced to anti-weaponization
+“Do not let the system be used to harm the dependent” is necessary but inadequate.
+There is a difference between:
+	•	inferring abuse from behavioral patterns, which is dangerous,
+	•	receiving a third-party accusation,
+	•	receiving an explicit disclosure from the dependent,
+	•	directly perceiving an emergency through the interaction.
+The system should not appoint itself an investigator. But categorical refusal to recognize direct, imminent danger is willful blindness.
+
+5. Cross-cutting technical constraint
+The privacy claim currently exceeds the architecture
+With operator-controlled hardware and no per-member encryption keys, the actual security statement is approximately:
+The software intends to enforce member-level access policies during normal operation, assuming the operator, account administrator, update path, recovery system, logging systems, and hardware root remain trustworthy.
+That is not strict per-member isolation.
+Potential disclosure paths include:
+	•	operator root access,
+	•	firmware updates,
+	•	support tooling,
+	•	service backups,
+	•	graph database administration,
+	•	embeddings and vector indexes,
+	•	cached prompts,
+	•	generated household summaries,
+	•	model traces,
+	•	notification text,
+	•	audit logs,
+	•	shared speech output,
+	•	inferred facts,
+	•	cross-member graph topology,
+	•	account recovery.
+Even where direct retrieval is blocked, the model can leak facts indirectly:
+	•	“You might want to check with Susan before buying wine.”
+	•	“That restaurant may not be appropriate for everyone.”
+	•	“Someone in the household has expressed concerns.”
+	•	differing answer behavior that reveals the existence of hidden records.
+Isolation must cover derived output and side channels, not merely database rows.
+Operator access creates legal exposure
+If the operator can access intelligible household data, the data may be subject to civil discovery, preservation orders, warrants, subpoenas, or other legal process depending on the service architecture and jurisdiction. Federal law contains mechanisms requiring providers to disclose or preserve stored communications and records, while ordinary civil subpoenas may reach electronically stored information under applicable rules. (Legal Information Institute("https://www.law.cornell.edu/uscode/text/18/2703?utm_source=chatgpt.com"))
+Encryption that the operator can bypass is not protection from operator-directed legal process.
+Also, claims such as “strict isolation,” “operator-blind,” or “nothing is stored” create consumer-protection risk when the technical implementation does not match them. The FTC has authority over non-common-carrier ISP activities and treats material misleading representations or omissions and unreasonable data practices as potential unfair or deceptive conduct. (Federal Trade Commission("https://www.ftc.gov/system/files/documents/reports/look-what-isps-know-about-you-examining-privacy-practices-six-major-internet-service-providers/p195402_isp_6b_staff_report.pdf"))
+
+Does the boundary/safety split hold?
+Conceptually: yes
+The goals are different:
+	•	Boundary manager: controls elective depth and collection.
+	•	Safety layer: controls response to potential imminent harm.
+Operationally: not as independent layers
+They use the same signals and sometimes require opposite behavior. You need a single arbitration policy.
+For the withdrawn teenager:
+Withdrawal alone
+The boundary manager should win.
+Do not infer crisis merely because the teenager is quiet, avoids topics, or stops engaging. That would turn ordinary privacy into a pathology signal.
+Withdrawal plus vague distress
+Use one low-pressure, non-leading check:
+“You do not have to discuss it. Are you safe right now, or would you prefer a private way to reach someone?”
+Then back off unless the answer indicates danger.
+Explicit self-harm or imminent danger
+Safety temporarily overrides the boundary rule, but only to gather the minimum information needed for immediate safety:
+	•	Is it happening now?
+	•	Is the person physically safe?
+	•	Can they contact a trusted human?
+	•	Is emergency intervention required?
+Adolescent confidentiality standards recognize both the importance of confidential access and exceptions involving safety or abuse. (American Academy of Pediatrics("https://publications.aap.org/pediatrics/article/153/5/e2024066326/197124/Confidentiality-in-the-Care-of-Adolescents-Policy?utm_source=chatgpt.com"))
+Suspected monitored environment
+Do not vocalize abuse resources or display an obvious alert. The system needs a safe-exit interface and neutral presentation. Otherwise the intervention itself may expose the person.
+The split is coherent as two objectives with explicit precedence, not as two autonomous classifiers.
+
+Minimum seed and graceful degradation
+The idea is technically sound but the scalar “minimum seed” is wrong.
+There is no single readiness threshold. Readiness is capability-specific:
+	•	Remembering a preferred radio station requires almost nothing.
+	•	Coordinating medication requires identity, authority, timing, current medication data, and error handling.
+	•	Advising on family conflict should probably never depend on a completeness score.
+	•	Caregiver coordination requires verified roles and boundaries.
+	•	Safety functions must work before any seed exists.
+A displayed progress meter can create:
+	•	pressure to disclose,
+	•	the impression that intimacy is the price of service quality,
+	•	a false belief that reaching 100% makes the system accurate,
+	•	strategic filler and careless confirmation,
+	•	a poor initial experience where the product repeatedly advertises its ignorance.
+Do not say the household AI becomes “full” at a threshold. A household model is never complete and continuously decays.
+Use capability readiness, for example:
+“I can remember individual preferences now. I cannot yet coordinate appointments because I do not know who is authorized to see them.”
+That is legible degradation tied to consequences, not a data-completeness score.
+Progressive disclosure is established as a way to reduce interface complexity. Progressive profiling, however, largely comes from customer identity and marketing systems; it is not strong evidence that gradual extraction of intimate family information produces meaningful consent. Repeated consent and disclosure prompts can instead cause fatigue and habituation. (nngroup.com("https://www.nngroup.com/articles/progressive-disclosure/?utm_source=chatgpt.com"))
+
+What each reviewer will flag first
+Ethicist
+Who has the moral authority to define another person inside the system?
+The narrator and custodian have structural power over absent, young, impaired, unwilling, or less technically capable members. The design assumes household cooperation where the highest-risk households are defined by unequal power.
+The ethicist will also object that:
+	•	warmth may be used to induce durable disclosure,
+	•	refusal may not be meaningful when the system controls valued household functions,
+	•	a dependent’s privacy is treated as something administered by another person,
+	•	bystanders and visitors have no genuine participation,
+	•	the system turns family intimacy into operator-custodial infrastructure.
+Psychologist
+You are interpreting behavior without a clinically reliable context.
+The psychologist will flag:
+	•	withdrawal being mistaken for refusal or distress,
+	•	apparent engagement being mistaken for consent,
+	•	proxy descriptions being treated as accurate,
+	•	anthropomorphic rapport encouraging over-disclosure,
+	•	repeated questioning causing shame or retraumatization,
+	•	users believing the system is therapeutic when it is not,
+	•	handoffs that feel like abandonment,
+	•	loss of continuity when safety disclosures are never retained.
+Trauma-informed approaches emphasize safety, transparency, trust, collaboration, empowerment, and choice. An invisible always-on process and hardware controlled by a potentially abusive party conflict directly with those principles. (SAMHSA("https://www.samhsa.gov/mental-health/trauma-violence/trauma-informed-approaches-programs?utm_source=chatgpt.com"))
+Attorney
+Your promises are not supportable by the current technical architecture.
+The first legal questions will be:
+	•	Who is the data controller or service provider?
+	•	What exactly can the operator access?
+	•	What is the account holder legally authorized to consent to for other members?
+	•	Are voiceprints or voice recordings regulated biometric data?
+	•	Do recording-consent laws apply?
+	•	When does COPPA apply to interactions involving children?
+	•	Which state consumer-health or privacy laws apply?
+	•	Which employees or integrated professionals may become mandated reporters?
+	•	How do child-abuse and vulnerable-adult reporting rules vary by state?
+	•	What happens under subpoena, litigation hold, warrant, divorce discovery, guardianship dispute, or criminal investigation?
+	•	What liability follows if the product recognizes imminent danger and merely supplies a telephone number?
+Mandatory-reporting rules differ substantially by jurisdiction and by the role of the person receiving the information. Child-abuse statutes vary in whether only designated professionals or all people must report; vulnerable-adult reporting also varies by state. (Child Welfare Information Gateway("https://www.childwelfare.gov/resources/mandatory-reporting-child-abuse-and-neglect/?utm_source=chatgpt.com"))
+
+Research precedent: what supports you and what does not
+Research area|Supports|Contradicts or complicates|
+Contextual integrity|Privacy should depend on role, purpose, recipient, information type, and transmission rule.|Per-member silos and subject confirmation are insufficient. A subject may confirm a fact while the subsequent flow remains inappropriate.|
+Motivational interviewing|Respect, reflection, autonomy, collaboration, avoiding confrontation.|MI is a trained helping practice, not a profiling strategy. Warmth used to increase disclosure can violate its spirit.|
+Progressive disclosure/profiling|Lower initial burden; defer detail until relevant.|Progressive profiling has weak precedent for intimate household memory. Repeated requests cause fatigue and habituation.|
+Active learning/HITL|Query humans when uncertainty matters; support correction and abstention.|Your “oracle” may be unavailable, coerced, mistaken, malicious, conflicted, or unauthorized. A reliable single ground-truth label often does not exist.|
+Trauma-informed design|Safety, transparency, choice, trust, collaboration and empowerment support your stated tone.|Always-on hidden processes, opaque retention, surprise escalation, and abuser-controlled infrastructure violate those principles.|
+Crisis-response protocols|Collaborative, least-invasive help and escalation to humans.|“Route only” is insufficient at imminent risk. Assessment and sometimes active intervention are required.|
+Multi-user smart-home research|Confirms that owner/secondary-user power imbalance and interpersonal privacy are central problems.|Shows that account ownership and ordinary access controls repeatedly fail to represent actual household relationships.|
+Supported decision-making|Supports tailored assistance and retaining agency where possible.|Contradicts blanket substitution by a custodian based on a global dependent status.|
+Proxy and multi-informant research|Multiple perspectives can add useful information.|Disagreement is often meaningful; proxy reports are systematically biased and should not be collapsed into canonical truth.|
+NIST’s AI risk guidance also emphasizes identifying where human oversight is required, documenting limitations, involving relevant actors, and testing under deployment-like conditions. For this product, “relevant actors” must include abuse survivors, adolescents, people with cognitive impairments, caregivers with conflicting interests, and non-account-holding household members—not merely representative families. (NIST AI Resource Center("https://airc.nist.gov/airmf-resources/playbook/map/"))
+
+What you are actually building
+You are not merely building onboarding.
+You are combining:
+	•	a provenance and belief-management system,
+	•	an interdependent privacy-policy engine,
+	•	a noisy and abstaining human-oracle workflow,
+	•	a capacity and surrogate-authority framework,
+	•	a multi-party access-control system,
+	•	a crisis triage protocol,
+	•	a domestic-abuse threat model,
+	•	and a legally discoverable family record.
+Calling it one persistent “confirmation subroutine” hides those distinct responsibilities.
+Non-negotiable changes before a vulnerable-household pilot
+	1	Stop using “confirmed” as a truth state. Implement attributed, contested, proxy, expired and unreachable states.
+	2	Separate permission to store from affirmation of accuracy.
+	3	Quarantine narrator claims about other people from personalization and inference.
+	4	Add real terminal states. Indefinite pursuit is not acceptable.
+	5	Use supported decision-making and assent before custodian substitution.
+	6	Implement independent per-member cryptographic identity, encryption and recovery before claiming strict isolation.
+	7	Define a safe ephemeral processing path for crisis content, including logs and telemetry.
+	8	Replace “never adjudicate” with “never determine guilt; assess immediate risk.”
+	9	Create explicit imminent-risk escalation rules, including least-invasive active intervention.
+	10	Design for account-holder hostility, coercion, bystanders, household dissolution, and legal process—not merely cooperative families.
+The hardest defect is not the interview design. It is that the system proposes to become the trusted keeper of family truth and safety before it has a defensible model of who may speak for whom, who controls the infrastructure, and what happens when the family is adversarial.

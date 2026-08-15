@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 880" width="1180" height="880" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1180" height="880" fill="#ffffff"/>
+  <text x="40" y="46" font-size="24" font-weight="bold" fill="#111">What happens on one turn</text>
+  <text x="40" y="70" font-size="13" fill="#555">HIP text path. Left column is the pipeline. Right column is what checks it.</text>
+
+  <text x="60" y="110" font-size="12" font-weight="bold" fill="#666">PIPELINE</text>
+  <text x="700" y="110" font-size="12" font-weight="bold" fill="#666">WHAT WATCHES IT</text>
+
+  <g stroke="#111" stroke-width="1.5" fill="#fff">
+    <rect x="60" y="125" width="480" height="58" rx="4"/>
+    <rect x="60" y="207" width="480" height="58" rx="4"/>
+    <rect x="60" y="289" width="480" height="58" rx="4"/>
+    <rect x="60" y="371" width="480" height="58" rx="4"/>
+    <rect x="60" y="453" width="480" height="58" rx="4"/>
+    <rect x="60" y="535" width="480" height="58" rx="4"/>
+    <rect x="60" y="617" width="480" height="58" rx="4"/>
+    <rect x="60" y="699" width="480" height="58" rx="4"/>
+    <rect x="60" y="781" width="480" height="58" rx="4"/>
+  </g>
+
+  <g font-size="15" font-weight="bold" fill="#111">
+    <text x="78" y="150">1. Turn arrives</text>
+    <text x="78" y="232">2. Intent classified</text>
+    <text x="78" y="314">3. Subject resolved</text>
+    <text x="78" y="396">4. Injection contract runs</text>
+    <text x="78" y="478">5. Facts opened by key class</text>
+    <text x="78" y="560">6. Prompt assembled</text>
+    <text x="78" y="642">7. Model generates</text>
+    <text x="78" y="724">8. Output checked</text>
+    <text x="78" y="806">9. Record written</text>
+  </g>
+
+  <g font-size="12" fill="#555">
+    <text x="78" y="170">Text query with an authenticated identity. Identity is possession of the device keypair.</text>
+    <text x="78" y="252">intent_classifier.py. Below threshold falls through to knowledge, the most permissive state.</text>
+    <text x="78" y="334">subject_resolution.py. Unscored and ungated. Over-match of a same-named entity is not caught.</text>
+    <text x="78" y="416">injection_contract.py, INJ-1 through INJ-7. Produces injection_result.allowed.</text>
+    <text x="78" y="498">partition_crypto. Member, pair, care-team, household-circle. Label never grants access, roster does.</text>
+    <text x="78" y="580">local_system_prompt, four render sites. Returns rendered_fact_ids. hot_context is not instrumented.</text>
+    <text x="78" y="662">Groq or local Ollama. The model words the reply; it does not decide disclosure.</text>
+    <text x="78" y="744">G0 runs only when reply_source is model. Every other exit is a deterministic template.</text>
+    <text x="78" y="826">admitted[], prompt_fact_ids, resolved_subjects. IDs and metadata, never fact values.</text>
+  </g>
+
+  <g stroke="#111" stroke-width="1.5" fill="none">
+    <path d="M300 183 L300 207"/><path d="M300 265 L300 289"/><path d="M300 347 L300 371"/>
+    <path d="M300 429 L300 453"/><path d="M300 511 L300 535"/><path d="M300 593 L300 617"/>
+    <path d="M300 675 L300 699"/><path d="M300 757 L300 781"/>
+  </g>
+  <g fill="#111">
+    <polygon points="300,207 295,197 305,197"/><polygon points="300,289 295,279 305,279"/>
+    <polygon points="300,371 295,361 305,361"/><polygon points="300,453 295,443 305,443"/>
+    <polygon points="300,535 295,525 305,525"/><polygon points="300,617 295,607 305,607"/>
+    <polygon points="300,699 295,689 305,689"/><polygon points="300,781 295,771 305,771"/>
+  </g>
+
+  <g stroke="#111" stroke-width="1.2" fill="#f4f4f4">
+    <rect x="700" y="371" width="420" height="58" rx="4"/>
+    <rect x="700" y="453" width="420" height="58" rx="4"/>
+    <rect x="700" y="535" width="420" height="58" rx="4"/>
+    <rect x="700" y="699" width="420" height="58" rx="4"/>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#111">
+    <text x="716" y="396">INJ-1..7 discrepancy checks</text>
+    <text x="716" y="478">PS1, PS2, DK1-4, OB4, OB5</text>
+    <text x="716" y="560">PSA1</text>
+    <text x="716" y="724">G0</text>
+  </g>
+  <g font-size="12" fill="#555">
+    <text x="716" y="416">Assert against the record, not against the prompt.</text>
+    <text x="716" y="498">No server-side path opens a fact. Master key destroyed.</text>
+    <text x="716" y="580">prompt_fact_ids must be a subset of admitted. Built and wired in.</text>
+    <text x="716" y="744">Reply names a tracked person while nothing was admitted. Hard zero.</text>
+  </g>
+
+  <g stroke="#888" stroke-width="1.2" stroke-dasharray="4 3" fill="none">
+    <path d="M540 400 L700 400"/><path d="M540 482 L700 482"/>
+    <path d="M540 564 L700 564"/><path d="M540 728 L700 728"/>
+  </g>
+
+  <text x="60" y="866" font-size="12" fill="#777">Known gaps: hot_context is live on the voice path and uncovered. Voice conversation history carries no fact IDs. known_facts bypasses the contract if a caller repopulates it (D-27).</text>
+</svg>

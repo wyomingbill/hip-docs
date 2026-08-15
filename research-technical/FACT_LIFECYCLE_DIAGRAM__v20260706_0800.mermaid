@@ -1,0 +1,51 @@
+stateDiagram-v2
+    direction TB
+
+    %% ── Composite terminal state ──────────────────────────────────────────────
+    state "CLOSED  (valid_to set)" as CLOSED {
+        CLOSED_SUPERSEDED : closed_reason = superseded
+        CLOSED_CORRECTED  : closed_reason = error  |  record_closed_at set
+    }
+
+    %% ── Fact creation (new node enters one of three live states) ──────────────
+    [*] --> DERIVED     : write — derived=true
+    [*] --> ASSERTED    : supersede | augment | correct  (conf>=0.6, target_fact_id set)
+    [*] --> UNCONFIRMED : unresolved | conf<0.6 | correct+no-target
+
+    %% ── In-place trust promotion (same node, no new row) ─────────────────────
+    %% OFFLINE = consolidate.py built but NOT wired into harness/orchestrator.py
+    %% NOT-WIRED = mechanism entirely absent from live pipeline
+    ASSERTED     --> CORROBORATED : OFFLINE: harden — reconcile raises confidence to high
+    CORROBORATED --> CONFIRMED    : NOT-WIRED: human sets confirmed_by
+    UNCONFIRMED  --> ASSERTED     : OFFLINE: _reconcile_pass retro-resolves write
+
+    %% ── Closure (prior node closed by a new write operation) ─────────────────
+    ASSERTED     --> CLOSED : targeted by SUPERSEDE or CORRECT
+    CORROBORATED --> CLOSED : targeted by SUPERSEDE or CORRECT
+    CONFIRMED    --> CLOSED : targeted by SUPERSEDE or CORRECT
+    UNCONFIRMED  --> CLOSED : targeted by later SUPERSEDE utterance
+    DERIVED      --> CLOSED : structural supersede (trust stays DERIVED on closed node)
+
+    CLOSED --> [*]
+
+    %% ── Caveats as diagram notes ──────────────────────────────────────────────
+    note right of DERIVED
+        derived=true is checked FIRST in trust() at queries.py:698.
+        A derived node with confirmed_by set still returns DERIVED.
+        Spec §3.4 (DERIVED can reach CONFIRMED) is unreachable in code.
+        Trust is permanently DERIVED; structural closure is still possible.
+    end note
+
+    note left of UNCONFIRMED
+        Coexists with prior fact — both valid_to IS NULL.
+        confirm_when_relevant=true written at store.py:364 but
+        never read in harness/orchestrator.py. NOT BUILT.
+        Can persist indefinitely without consolidation.
+    end note
+
+    note right of CORROBORATED
+        Two divergent CORROBORATED predicates in the codebase:
+        queries.py: _CONF_ORDER[to] > _CONF_ORDER[from] (numeric rise).
+        fact_change.py: any reconcile entry where to IN (medium,high).
+        Same fact can classify differently depending on caller.
+    end note

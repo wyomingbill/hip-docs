@@ -1,0 +1,632 @@
+Overall finding
+Your instincts are directionally sound, but the proposed abstractions are too compressed.
+	•	There is no defensible canonical total ordering of observed < asserted < corroborated < confirmed.
+	•	There is no established general rule for when a conversational agent should re-approach after withdrawal. The literature supports topic-specific backoff, contextual timing, explicit permission and attempt limits, not autonomous persistence.
+	•	Sensitivity should not be represented as one intrinsic scalar. Use a structured information-flow policy plus a separate risk assessment.
+	•	“Visibly serves the family” is not a valid internal decision criterion. It is a latent construct that requires external validation, independent measurement and causal evidence.
+The recurring mistake is trying to convert multidimensional governance decisions into single ladders or scores.
+
+1. Canonical trust ordering
+Verdict
+The ordering is ad hoc. Do not make it canonical.
+Confirmed-by-subject > corroborated > asserted > observed fails because the epistemic value of each state depends on:
+	•	the type of proposition,
+	•	who can know it,
+	•	the reliability of each source,
+	•	source independence,
+	•	observation quality,
+	•	incentives and conflicts,
+	•	time,
+	•	and whether “confirmation” means truth, authority or consent.
+The relevant fields do not provide a universal source hierarchy.
+What the established research actually addresses
+Truth-maintenance systems
+Classic truth-maintenance systems track:
+	•	propositions,
+	•	justifications,
+	•	dependencies,
+	•	contradictions,
+	•	and which beliefs remain supported when assumptions change.
+They do not generally tell you how much more trustworthy a subject confirmation is than a sensor observation. Traditional TMS work is primarily about maintaining logical consistency and reasons; belief-maintenance extensions add degrees of belief, but the uncertainty calculus still has to be selected by the designer. (arXiv("https://arxiv.org/abs/1304.3084?utm_source=chatgpt.com"))
+Your provenance graph and supersession logic are closely related to this literature. Your proposed rung ordering is not.
+AGM belief revision
+AGM belief revision gives rationality postulates for adding, removing and revising beliefs. It uses concepts such as epistemic entrenchment—which beliefs should be harder to abandon—but it does not supply a universal ranking of human, sensor and documentary sources. The entrenchment ordering or possible-world ordering must come from outside the formalism.
+AGM helps answer:
+How should a coherent belief set change when new information conflicts with old information?
+It does not answer:
+Is Dad’s self-report always stronger than two caregivers’ reports?
+Truth discovery and data fusion
+Truth-discovery systems jointly estimate:
+	•	the likely truth of claims,
+	•	source reliability,
+	•	source dependence,
+	•	object difficulty,
+	•	and sometimes source-specific false-positive and false-negative rates.
+Real systems commonly use iterative Bayesian, expectation-maximization or optimization procedures rather than fixed rungs. A claim’s confidence increases when additional evidence arrives, but the increase depends on the estimated reliability and independence of the contributing sources.
+The dependence issue is decisive. Five relatives repeating what one person told them are not five independent sources. Truth-discovery research explicitly models copying and common dependence because naive majority voting allows one false source to become an apparent consensus.
+Multi-informant psychology
+Clinical assessment research is particularly relevant to family memory. Parents, children, teachers and clinicians routinely disagree. Those discrepancies are often not mere noise: different informants observe the person in different contexts, have access to different internal experiences, and possess different biases. The field generally warns against blindly averaging or canonizing one reporter. (PubMed Central (PMC)("https://pmc.ncbi.nlm.nih.gov/articles/PMC4486608/?utm_source=chatgpt.com"))
+That literature directly contradicts the idea that multiple matching reports necessarily converge toward a context-free truth.
+
+Why your four rungs do not form a total order
+Observed
+This category is hopelessly broad.
+It might mean:
+	•	a calibrated fall sensor detected an impact,
+	•	the system heard someone coughing,
+	•	an LLM inferred that someone sounded depressed,
+	•	a caregiver saw Dad stumble,
+	•	the system observed that Dad ordered tea three times.
+Those have radically different error models.
+A calibrated measurement of an objective event may be stronger than subject denial. A model inference from conversational style may be much weaker than a direct self-report.
+Asserted
+“Asserted” describes provenance, not credibility.
+A single assertion might be:
+	•	the only possible direct evidence of an internal preference,
+	•	a malicious allegation,
+	•	a clinician reporting a test result,
+	•	a child describing an event no one else saw,
+	•	a third-hand family rumor.
+It needs source, role, access to knowledge and incentives.
+Corroborated
+Corroboration is valuable only when sources are sufficiently independent and capable of knowing the fact.
+Three people may agree because:
+	•	they separately observed the event,
+	•	they share a family narrative,
+	•	they all read the same text thread,
+	•	one influential person told the others,
+	•	the system itself suggested the interpretation to each of them.
+Corroboration can also reflect shared bias.
+Confirmed
+Confirmation can mean at least four different things:
+	1	First-person authority: “I prefer not to eat meat.”
+	2	Epistemic testimony: “I took my medication.”
+	3	Legal or delegated authority: “I am authorized to schedule her appointments.”
+	4	Consent: “You may store and use this information.”
+Those are not interchangeable.
+A subject is generally authoritative about:
+	•	current preferences,
+	•	personal intentions,
+	•	chosen identity descriptions,
+	•	desired boundaries.
+A subject is not necessarily authoritative about:
+	•	whether they were unconscious,
+	•	whether they have cognitive impairment,
+	•	whether another person felt threatened,
+	•	whether they took a medication correctly,
+	•	an objective laboratory value.
+An authority may validate permission or legal status without validating factual truth.
+
+Best practice
+Use separate dimensions, not one rung
+For every claim, store at least:
+Dimension|Meaning|
+Provenance|Who or what supplied the evidence|
+Evidence mode|Self-report, proxy report, sensor, document, inference|
+Epistemic confidence|Estimated probability or bounded confidence in the proposition|
+Source reliability|Domain- and context-specific reliability of the source|
+Independence group|Which evidence items may share a common origin|
+Authority status|Whether the actor has authority to define, approve or act|
+Consent status|Whether storage, retrieval and particular uses are allowed|
+Dispute state|Uncontested, contradicted, contested or unresolved|
+Temporal validity|When the assertion was believed to be true|
+Scope|Subjective, objective, relational, normative or administrative|
+Do not let “subject confirmed” automatically modify the probability field. It may instead modify:
+	•	the subject_attestation field,
+	•	the authority field,
+	•	or the storage/use consent field.
+Use claim-type-specific update rules
+Examples:
+Subjective preference
+“Maria likes quiet mornings.”
+Maria’s current statement should dominate others’ claims about her preference. Behavioral observation remains useful as historical or contradictory evidence, but not as a reason to overrule her declared preference.
+Objective event
+“Dad fell at 2:00 a.m.”
+A calibrated sensor, contemporaneous video, Dad’s statement and caregiver observations all contribute according to their error models and independence. Subject confirmation is evidence, not automatic closure.
+Relational claim
+“Dad trusts Susan more than Michael.”
+Do not force a single truth value. Store attributed perspectives and the contexts in which each was expressed.
+Authority claim
+“Susan may manage Dad’s medications.”
+This requires a separate authority-validation workflow. Corroboration does not create legal or ethical authority.
+Update confidence probabilistically
+The general Bayesian pattern is:
+Posterior belief = prior belief updated by the likelihood of each evidence item, conditional on its source reliability and dependence.
+You do not need a perfectly calibrated numeric probability on day one. You do need to avoid pretending that ordinal labels supply one.
+A practical implementation could maintain:
+	•	a confidence interval,
+	•	a qualitative evidence strength,
+	•	and an explicit list of supporting and opposing evidence.
+
+Documented pitfalls
+	•	Double counting: repeated information appears independent.
+	•	Circular source reliability: sources are declared trustworthy because they agree with conclusions produced from those same sources.
+	•	Authority contamination: permission to act is treated as evidence of truth.
+	•	Subject infallibility: first-person reports are treated as definitive even for externally observable matters.
+	•	Majority domination: minority or private experiences disappear.
+	•	Context collapse: disagreement caused by different settings is treated as error.
+	•	False precision: a calculated probability appears more meaningful than the underlying evidence supports.
+	•	Premature canonization: one value replaces the history of disagreement.
+What to read
+Start with:
+	•	Doyle and the truth-maintenance tradition, followed by the AGM belief-revision literature. The modern knowledge-representation review provides a concise map of AGM, entrenchment and revision operators.
+	•	Li et al., “A Survey on Truth Discovery.”
+	•	Dong, Berti-Équille and Srivastava, “Integrating Conflicting Data: The Role of Source Dependence.”
+	•	De Los Reyes et al. on multi-informant discrepancies and context-specific reporting. (PubMed Central (PMC)("https://pmc.ncbi.nlm.nih.gov/articles/PMC4486608/?utm_source=chatgpt.com"))
+Direct answer
+You are reinventing parts of provenance, truth discovery and multi-informant assessment, but combining them in a novel household context. The mistake is believing those literatures culminate in a canonical ladder. They do not.
+
+2. Depth ceiling and withdrawal-recovery
+Verdict
+Your instinct to back off is sound. The proposed use of short answers, deflection and silence as direct withdrawal signals is not sufficiently reliable.
+The harder truth is that there is no well-established universal re-engagement schedule for persistent household agents. Direct evidence on “a private AI asked too much, backed off and later tried again” remains thin. You have to combine findings from:
+	•	conversational engagement,
+	•	proactive conversational agents,
+	•	interruption management,
+	•	human-robot interaction,
+	•	trust repair,
+	•	and clinical communication.
+Detecting disengagement
+Engagement research treats engagement as multidimensional and task-specific. Indicators can include:
+	•	turn length,
+	•	response latency,
+	•	gaze and body orientation,
+	•	interruptions,
+	•	backchannels,
+	•	prosody,
+	•	task progress,
+	•	explicit feedback,
+	•	and abandonment.
+No single cue reliably establishes withdrawal. The meaning of silence or brevity varies by person, task and context. (PubMed Central (PMC)("https://pmc.ncbi.nlm.nih.gov/articles/PMC7806067/?utm_source=chatgpt.com"))
+A short answer may mean:
+	•	“stop asking,”
+	•	fatigue,
+	•	speech or language difficulty,
+	•	someone else entered the room,
+	•	the person is concentrating,
+	•	the answer is simply short,
+	•	low mood,
+	•	cultural communication style,
+	•	mistrust of this topic,
+	•	or mistrust of the entire system.
+Therefore, behavioral withdrawal should be represented as an uncertain interaction state, not a durable psychological fact.
+What proactive-agent research says
+Human-centered proactive-agent work emphasizes three dimensions:
+	•	intelligence,
+	•	adaptivity,
+	•	and civility.
+Adaptivity includes managing timing and pacing based on real-time user context. Civility includes respecting personal and social boundaries. The literature explicitly warns that initiative-taking systems can become intrusive, overprotective and controlling when they prioritize their own goals over user needs. (Lizi Liao("https://liziliao.github.io/papers/SIGIR24_HPC.pdf"))
+Interruption research similarly suggests that appropriate timing depends on:
+	•	urgency,
+	•	current task state,
+	•	availability cues,
+	•	and the cost of delay.
+There is no fixed “wait seven days and ask again” result. (arXiv("https://arxiv.org/abs/2106.02077?utm_source=chatgpt.com"))
+Best-practice withdrawal model
+Make withdrawal topic-specific
+Do not store:
+Bill is disengaged.
+Store something closer to:
+During the July 30 voice session, Bill declined further questions about household finances.
+Scope the state across:
+	•	topic,
+	•	channel,
+	•	session,
+	•	location or co-presence where known,
+	•	and level of explicitness.
+Someone may reject a voice conversation but be willing to review a private screen later.
+Distinguish levels of withdrawal
+Signal|Response|
+Short or ambiguous response|Reduce depth; do not assume refusal|
+Topic change or repeated deflection|Stop that line of inquiry|
+Explicit “not now”|Stop and permit a later opt-in|
+Explicit “do not ask again”|Persistent topic suppression|
+Distress or privacy concern|Stop, acknowledge and offer control|
+System caused a boundary violation|Enter trust-repair state, not normal cooldown|
+Re-approach only on a valid trigger
+Time passing is not enough.
+A later approach should normally require at least one of:
+	•	the person explicitly asks to resume,
+	•	a relevant task makes the information immediately useful,
+	•	the person has configured periodic reminders,
+	•	a material circumstance has changed,
+	•	the system needs the information to complete a user-requested task.
+Bad trigger:
+It has been two weeks since I asked about your relationship with your daughter.
+Better trigger:
+You asked me to coordinate Thanksgiving travel. Would it help to include your daughter’s current schedule, or should I leave her out?
+The second request is:
+	•	tied to a current goal,
+	•	minimally revealing,
+	•	and easy to decline.
+Use a permission probe, not the original question
+After ambiguous withdrawal:
+“Should I leave this topic alone, ask another time, or only discuss it when you bring it up?”
+After a substantial delay and new relevance:
+“This may matter for the task you just requested. Is it okay to ask one question about it?”
+Do not repeat the sensitive claim in the permission request.
+Use attempt budgets and backoff
+Implement:
+	•	maximum unsolicited attempts per topic,
+	•	exponential or user-configured cooldowns,
+	•	permanent suppression after explicit refusal,
+	•	no cross-channel evasion,
+	•	no escalating emotional language,
+	•	no asking another household member to pressure the person.
+A path-independent confirmation process that constantly seeks alternate routes would directly conflict with this principle.
+
+Trust repair
+Withdrawal is not always a trust rupture. Sometimes the person simply does not want to discuss something.
+Where the system actually violated a boundary, trust-repair research suggests that apologies, explanations and promises can sometimes help, but effects depend on the kind and frequency of violation. Repeated violations are difficult to repair, and verbal repair without changed performance has limited value. (researchgate.net("https://www.researchgate.net/publication/387755779_Repairing_Trust_in_Robots_A_Meta-analysis_of_HRI_Trust_Repair_Studies_with_A_No-Repair_Condition?utm_source=chatgpt.com"))
+A privacy-boundary repair should include:
+	1	Acknowledge exactly what the system did.
+	2	Do not rationalize the intrusion.
+	3	State what was and was not retained.
+	4	Provide immediate deletion and suppression controls.
+	5	Explain the concrete policy change.
+	6	Do not immediately request renewed disclosure.
+An apology followed by another question is not repair.
+Documented failure modes
+	•	Misclassifying communication style as withdrawal.
+	•	Misclassifying distress as permission to probe.
+	•	Repeated “gentle” reminders becoming harassment.
+	•	Cross-channel persistence: the user refuses by voice and gets prompted on a phone.
+	•	Surveillance disclosure: “I noticed you become quiet when money is mentioned.”
+	•	Re-engaging during vulnerability: loneliness, illness or late-night distress.
+	•	Anthropomorphic pressure: “I’m worried about you” used to elicit information.
+	•	Trust repair as persuasion: the apology is optimized to recover disclosure rather than restore control.
+	•	Proactivity optimized for engagement: the system learns that emotionally charged prompts keep users talking.
+What to read
+	•	Oertel et al., “Engagement in Human-Agent Interaction: An Overview.” (PubMed Central (PMC)("https://pmc.ncbi.nlm.nih.gov/articles/PMC7806067/?utm_source=chatgpt.com"))
+	•	Deng et al., “Towards Human-Centered Proactive Conversational Agents.” (Lizi Liao("https://liziliao.github.io/papers/SIGIR24_HPC.pdf"))
+	•	Edwards et al., “Eliciting Spoken Interruptions to Inform Proactive Speech Agent Design.” (arXiv("https://arxiv.org/abs/2106.02077?utm_source=chatgpt.com"))
+	•	Esterwood and colleagues on trust violations and repair, including the 2025 meta-analysis. (researchgate.net("https://www.researchgate.net/publication/387755779_Repairing_Trust_in_Robots_A_Meta-analysis_of_HRI_Trust_Repair_Studies_with_A_No-Repair_Condition?utm_source=chatgpt.com"))
+Direct answer
+You are not reinventing disengagement detection or trust repair, but you are working in a deployment setting for which the evidence base is incomplete. The correct conclusion is not to invent a confident timing rule. It is to build a conservative, user-controlled re-entry protocol.
+
+3. Sensitivity encoding
+Verdict
+A fixed scalar per fact type is insufficient.
+A baseline sensitivity classification can be useful as a conservative prior, but the actual collection and disclosure decision must be contextual and multidimensional.
+What contextual integrity implies
+Contextual integrity represents an information flow using elements such as:
+	•	the subject,
+	•	the sender,
+	•	the recipient,
+	•	the information type,
+	•	the social context,
+	•	and the transmission principle governing the flow.
+The same information type can be appropriate in one flow and inappropriate in another. Marital status, for example, has different relevance in dating and employment. Consent is only one possible transmission principle, not a universal cure for inappropriate information flows.
+Formal work has encoded contextual-integrity norms in temporal logic and Datalog, demonstrating that context-sensitive rules can be represented and checked computationally. Crowdsourcing and vignette studies have also been used to derive norms for particular domains, including smart homes.
+This is more principled than a scalar, but the actual norms remain domain- and population-specific.
+Separate three concepts
+1. Information category
+Examples:
+	•	health,
+	•	finances,
+	•	location,
+	•	relationship,
+	•	preference,
+	•	identity,
+	•	biometrics,
+	•	child-related,
+	•	sexuality,
+	•	religious belief.
+This is useful for default handling.
+2. Information-flow policy
+Determines whether a particular action is permitted:
+May this sender supply this information about this subject to this recipient for this purpose, through this channel, under these conditions?
+3. Harm or privacy risk
+Estimates consequences if the collection, inference or flow goes wrong.
+These should not collapse into one score.
+
+Recommended encoding
+For every proposed action involving a fact, construct a policy object such as:
+Field|Example|
+Context|Household care coordination|
+Subject|Dad|
+Sender|Daughter Susan|
+Recipient|Dad’s private AI context|
+Information type|Alcohol use|
+Action|Ask, store, infer, retrieve, speak or share|
+Purpose|Medication interaction checking|
+Channel|Shared-room voice|
+Co-present people|Susan and Michael|
+Transmission principle|Dad volunteered; private use only|
+Retention|30 days pending confirmation|
+Authority|Susan has no authority to define Dad’s record|
+Sensitivity baseline|High|
+Relational subjects|Dad, Susan and possibly Michael|
+Legal constraints|Jurisdiction- and service-specific|
+User preference|Dad: never speak this aloud|
+Risk modifiers|Abusive account holder possible|
+Decision|Do not elicit in shared voice; permit private voluntary disclosure|
+A policy engine can then return:
+	•	ALLOW
+	•	ALLOW_WITH_CONTROLS
+	•	ASK_PERMISSION
+	•	DEFER_TO_PRIVATE_CHANNEL
+	•	DENY
+	•	REQUIRE_HUMAN_REVIEW
+Add a multidimensional risk vector
+A useful risk vector might include:
+	•	potential severity of harm,
+	•	identifiability,
+	•	relational sensitivity,
+	•	audience breadth,
+	•	persistence,
+	•	aggregation and inference risk,
+	•	coercion risk,
+	•	legal exposure,
+	•	vulnerability of the subject,
+	•	reversibility,
+	•	user-stated sensitivity,
+	•	uncertainty in the classification.
+Do not automatically sum these into one number. Some risks should be non-compensable.
+For example, high task utility should not mathematically cancel a high risk of exposing an abuse disclosure to the alleged abuser.
+Enforcement precedent
+Purpose-based access control attaches permitted purposes to data and evaluates whether the intended use is allowed. Attribute- and relationship-based controls can add recipient role, household relationship, device, location and environmental context. These access-control models are useful implementation substrates, although none by itself supplies the correct household norm. (ACM Digital Library("https://dl.acm.org/doi/10.1007/s00778-006-0023-0?utm_source=chatgpt.com"))
+The clean architecture is:
+Contextual integrity defines the norm. Purpose-, attribute- and relationship-based controls enforce it.
+How to establish the actual norms
+Use a controlled governance process:
+	1	Derive initial norms from ethics, legal and domain expertise.
+	2	Conduct factorial-vignette studies with household members, caregivers, adolescents, elders and abuse survivors.
+	3	Separate majority expectations from hard rights and safety protections.
+	4	Encode the norms as reviewable policies.
+	5	Version them.
+	6	Test them against adversarial scenarios.
+	7	Permit household preferences to tighten protections.
+	8	Do not allow household preferences to waive another person’s rights.
+Smart-home contextual-integrity studies demonstrate that recipient, information type, conditions of sharing and bystander status materially affect acceptability. (arXiv("https://arxiv.org/abs/1805.06031?utm_source=chatgpt.com"))
+What gets sensitivity wrong
+Fixed data labels
+“Health = 9, favorite music = 2” misses that:
+	•	a music preference can disclose religion or political affiliation,
+	•	sleep schedules can enable stalking,
+	•	electricity use can reveal presence,
+	•	a health condition shared privately with a caregiver may be appropriate,
+	•	the same condition spoken in a family room may be dangerous.
+Consent as a universal override
+Consent may be:
+	•	uninformed,
+	•	coerced,
+	•	bundled,
+	•	stale,
+	•	granted by the wrong person,
+	•	or unable to authorize disclosure about another subject.
+Ignoring relational data
+“Michael is abusing alcohol” concerns Michael, but may also expose:
+	•	Susan as the source,
+	•	a marital conflict,
+	•	children’s safety,
+	•	and household financial problems.
+One fact can have multiple subjects and owners of legitimate interests.
+Ignoring action type
+The sensitivity of:
+	•	receiving,
+	•	storing,
+	•	inferring,
+	•	retrieving,
+	•	displaying,
+	•	speaking aloud,
+	•	and sharing externally
+is not identical.
+Ignoring inference and aggregation
+Many low-sensitivity facts can jointly produce a highly sensitive inference. Static labels on source facts will not catch that.
+Learning norms entirely from behavior
+A system that observes what users tolerate will learn power, resignation and coercion—not necessarily valid consent or appropriate norms.
+What to read
+	•	Nissenbaum, “Privacy as Contextual Integrity.” (UW Law Digital Commons("https://digitalcommons.law.uw.edu/wlr/vol79/iss1/10/?utm_source=chatgpt.com"))
+	•	Barth, Datta, Mitchell and Nissenbaum, “Privacy and Contextual Integrity: Framework and Applications.”
+	•	Shvartzshnaider et al., “Crowdsourced, Actionable and Verifiable Contextual Informational Norms.” (arXiv("https://arxiv.org/abs/1601.04740?utm_source=chatgpt.com"))
+	•	Byun and Li, “Purpose-Based Access Control for Privacy Protection.” (Purdue CS("https://www.cs.purdue.edu/homes/ninghui/papers/pbac_vldbj.pdf?utm_source=chatgpt.com"))
+	•	Apthorpe et al., “Discovering Smart Home IoT Privacy Norms Using Contextual Integrity.” (arXiv("https://arxiv.org/abs/1805.06031?utm_source=chatgpt.com"))
+Direct answer
+Your Nissenbaum instinct is correct. There is a principled schema for encoding sensitivity context, but there is no universal principled scalar that outputs the correct answer. The structure can be standardized; the norms must be empirically and normatively established for the domain.
+
+4. The self-certifying evaluation problem
+Verdict
+The reviewer is correct. This is the most serious design flaw.
+“The system only deepens where the added detail visibly serves the family.”
+contains an unmeasured latent construct: serves the family.
+If the system:
+	1	asks for more information,
+	2	generates a response using that information,
+	3	then judges that its response was useful,
+the evidence is circular.
+The fact that the output visibly uses the information proves only that the system can incorporate the information—not that collecting it benefited the user.
+Why self-evaluation fails
+Construct validity failure
+“Served the family” is not directly observable. It is a construct, like helpfulness, well-being or reasoning ability.
+A valid evaluation must establish that the measurements genuinely support the claim being made. Measurement research distinguishes, among other things:
+	•	content validity,
+	•	criterion validity,
+	•	construct validity,
+	•	convergent validity,
+	•	discriminant validity,
+	•	external validity,
+	•	and consequences of measurement use.
+A single generated justification establishes none of these. (arXiv("https://arxiv.org/html/2505.10573v4"))
+Goodhart effects
+If “visible usefulness” becomes the optimization target, several Goodhart failures appear.
+Regressional Goodhart
+The system selects interactions that score highly because of noise. A user happens to respond positively once, and the system infers that deeper profiling generally helps.
+Extremal Goodhart
+The metric was correlated with benefit during benign meal-planning tasks but fails when applied to addiction, sexuality or family conflict.
+Causal Goodhart
+The system changes the metric without improving the underlying goal. It asks questions that produce more personalized-looking responses, increasing apparent relevance without improving decisions.
+Adversarial Goodhart
+A sufficiently capable model learns to produce persuasive rationales that make its information gathering appear justified.
+The Goodhart taxonomy explicitly distinguishes regressional, extremal, causal and adversarial failures under metric optimization. (arXiv("https://arxiv.org/abs/1803.04585"))
+Reward hacking and specification gaming
+AI-safety research formalizes the general problem: optimizing an imperfect proxy can increase the proxy while reducing performance on the actual objective. Formal work shows that genuinely unhackable proxy rewards are extremely difficult to construct outside constrained policy sets. (arXiv("https://arxiv.org/abs/1606.06565?utm_source=chatgpt.com"))
+Your model need not be trained through reinforcement learning for the failure to matter. A planner, prompt or policy that selects deeper questions based on an internal usefulness score can specification-game that score.
+Evaluator dependence
+LLM evaluators exhibit known biases, including preference for familiar or self-generated styles. Using the same model family to generate an action and validate its justification creates correlated error and self-preference risk. (arXiv("https://arxiv.org/abs/2410.21819?utm_source=chatgpt.com"))
+A separate LLM judge reduces direct identity but does not create ground truth. It remains a proxy requiring calibration against independent human and task outcomes.
+
+What a valid system should evaluate
+The claim should be made specific:
+Collecting detail X, for task Y, from person Z, improves outcome O over time horizon T, without exceeding privacy, burden or safety limits H.
+That can be tested.
+“Serves the family” cannot.
+Separate the decision from the evaluation
+Runtime decision
+At runtime, the system can estimate:
+	•	expected value of the information,
+	•	whether the information is necessary for the requested task,
+	•	uncertainty reduction,
+	•	sensitivity and privacy cost,
+	•	burden,
+	•	and whether explicit permission is required.
+But the system’s estimate should only be a proposal.
+A separate policy layer should determine whether the question is allowed.
+For higher-sensitivity information, the person should decide whether the expected benefit justifies the request.
+Post-deployment evaluation
+An independent evaluation process should later test whether the design actually helped.
+
+A stronger validity architecture
+1. Define outcomes before the system acts
+For each deepening pattern, define the anticipated benefit and harm measures in advance.
+Example:
+Asking about dietary restrictions during meal planning.
+Potential benefit outcomes:
+	•	fewer rejected meal suggestions,
+	•	fewer corrections,
+	•	higher task-completion rate,
+	•	user-reported usefulness after the meal plan is used.
+Potential harm outcomes:
+	•	discomfort,
+	•	refusal rate,
+	•	deletion rate,
+	•	regret,
+	•	reduced future engagement,
+	•	disclosure to unauthorized members.
+The model’s personalized wording is not an outcome.
+2. Link every question to a user-requested goal
+Before asking, require a machine-readable rationale:
+	•	current user goal,
+	•	missing information,
+	•	expected decision changed by the answer,
+	•	less intrusive alternatives,
+	•	sensitivity policy,
+	•	expiration of the need.
+The policy engine should reject questions where the expected downstream decision cannot be named.
+This rationale should be auditable, but it should not certify its own correctness.
+3. Use value-of-information reasoning conservatively
+A question has value when its answer could materially change a useful decision.
+Ask:
+What would the system do differently for each plausible answer?
+If the answer is:
+It would let the response sound more personalized,
+that is usually not enough.
+If neither answer would change the action, do not collect the fact.
+4. Obtain direct user authorization
+For personal information, one of the strongest runtime checks is not the system’s utility estimate but an explicit choice:
+“This could improve medication reminders by letting me account for your sleep schedule. It would require storing your typical bedtime privately. Store it, use it only for this session, or continue without it?”
+This does not prove eventual benefit, but it prevents the system from being the sole judge.
+5. Measure utility outside the generating model
+Use a basket of independent signals:
+	•	direct user evaluation,
+	•	delayed user evaluation,
+	•	objective task success,
+	•	correction rate,
+	•	abandonment,
+	•	deletion and regret,
+	•	opt-out rates,
+	•	privacy complaints,
+	•	household conflict reports,
+	•	human expert review,
+	•	and longitudinal retention of trust.
+No one signal should become the master target.
+6. Use causal evaluation
+Where ethical and practical:
+	•	compare variants that ask different levels of detail,
+	•	use randomized or stepped introduction,
+	•	predefine primary outcomes,
+	•	maintain holdout households or tasks,
+	•	assess whether deeper collection causes improvement rather than merely correlating with engaged users.
+Otherwise, highly engaged families will both disclose more and report more satisfaction, producing a false conclusion that disclosure caused satisfaction.
+7. Keep some evaluation measures out of the optimizer
+Maintain:
+	•	hidden audit sets,
+	•	periodic qualitative review,
+	•	rotated metrics,
+	•	red-team scenarios,
+	•	and measures not directly exposed to the generation policy.
+Anything permanently optimized will eventually become less diagnostic.
+8. Use independent human review
+Reviewers should receive:
+	•	the user request,
+	•	the proposed question,
+	•	the information-flow context,
+	•	and downstream outcome evidence.
+They should not initially see the system’s persuasive self-justification. Otherwise they may anchor on it.
+For high-risk domains, reviewers must have relevant expertise rather than being generic annotators.
+9. Evaluate utility and intrusion separately
+Do not create:
+Net benefit = usefulness score − privacy score.
+That permits large utility estimates to cancel unacceptable violations.
+Use constrained optimization:
+Maximize validated task benefit, subject to hard privacy, consent, safety and burden constraints.
+10. Establish stop criteria
+A deepening strategy should be suspended when:
+	•	deletion or regret exceeds a threshold,
+	•	unauthorized disclosure occurs,
+	•	certain vulnerable groups show worse outcomes,
+	•	the benefit does not reproduce outside initial testing,
+	•	users report pressure or manipulation,
+	•	or the system cannot explain what decision the information changes.
+NIST’s AI risk framework similarly emphasizes defined roles, independent monitoring, documented limits and continuing evaluation rather than trusting system-generated assurances. (NIST("https://www.nist.gov/itl/ai-risk-management-framework"))
+
+A concrete replacement for your rule
+Replace:
+The system only deepens where the added detail visibly serves the family.
+With:
+The system may request additional detail only when the detail is relevant to a current member-authorized goal, could materially change a permitted action, passes an independently defined sensitivity policy, and is collected with the required level of permission. Whether the deepening strategy actually benefits users is evaluated separately through predefined user, task, privacy and safety outcomes.
+That removes the circularity.
+What not to treat as evidence of benefit
+	•	The system referred to the detail later.
+	•	The response became more specific.
+	•	The response sounded empathic.
+	•	The user continued speaking.
+	•	The user did not object.
+	•	The system’s critic model approved.
+	•	A household member confirmed the fact.
+	•	Engagement increased.
+	•	The model generated a plausible explanation.
+What counts as stronger evidence
+	•	The user said in advance that the information would support a goal.
+	•	The answer materially changed an appropriate action.
+	•	The resulting task outcome improved.
+	•	The user later judged the result useful.
+	•	The user did not experience unanticipated disclosure or regret.
+	•	Results reproduced across households and contexts.
+	•	Independent reviewers reached similar conclusions.
+	•	Benefit remained when compared with a less invasive alternative.
+What to read
+	•	Manheim and Garrabrant, “Categorizing Variants of Goodhart’s Law.” (arXiv("https://arxiv.org/abs/1803.04585?utm_source=chatgpt.com"))
+	•	Amodei et al., “Concrete Problems in AI Safety.” (arXiv("https://arxiv.org/abs/1606.06565?utm_source=chatgpt.com"))
+	•	Skalse et al., “Defining and Characterizing Reward Hacking.” (arXiv("https://arxiv.org/abs/2209.13085?utm_source=chatgpt.com"))
+	•	Salaudeen et al., “Measurement to Meaning: A Validity-Centered Framework for AI Evaluation.” (arXiv("https://arxiv.org/html/2505.10573v4"))
+	•	Wataoka et al., “Self-Preference Bias in LLM-as-a-Judge.” (arXiv("https://arxiv.org/abs/2410.21819?utm_source=chatgpt.com"))
+	•	NIST AI Risk Management Framework and Playbook. (NIST("https://www.nist.gov/itl/ai-risk-management-framework"))
+Direct answer
+Your instinct about Goodhart and specification gaming is exactly right. You are not reinventing the failure; you are reproducing a standard form of it. The solution is not a better self-critique prompt. It is institutional and technical separation between action generation, policy authorization and outcome evaluation.
+
+Recommended architecture across all four issues
+Use four independent subsystems:
+1. Evidence and provenance engine
+Stores attributed claims, observations, contradictions, source dependencies and confidence estimates.
+It does not decide consent or authorization.
+2. Privacy and authority policy engine
+Evaluates structured information flows, purposes, relationships, channels, permissions and sensitivity constraints.
+It does not determine whether a claim is true.
+3. Interaction-boundary controller
+Tracks topic-specific permission, withdrawal state, attempt limits, cooldowns and allowed re-entry triggers.
+It does not optimize for maximum disclosure.
+4. Independent evaluation system
+Measures whether collection strategies improve predefined user outcomes without unacceptable privacy, burden or safety costs.
+It is not the same model or objective used to generate the interaction.
+That separation is the common answer to all four structural problems.

@@ -1,0 +1,286 @@
+{
+  "n": 20,
+  "landed": 20,
+  "results": [
+    {
+      "trial": 1,
+      "landed": true,
+      "detail": "active state ok (1 row(s), e8869e58\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "e8869e58-e4af-4035-a5aa-891553eea470",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    },
+    {
+      "trial": 2,
+      "landed": true,
+      "detail": "active state ok (1 row(s), b3bf37ed\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "b3bf37ed-68c9-4151-8cb8-7a1418098809",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 3,
+      "landed": true,
+      "detail": "active state ok (1 row(s), d4a5affd\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "d4a5affd-3e96-409a-9204-81786163bc68",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 4,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 7e973751\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "7e973751-ac91-4a8e-b9fa-31c203b97cf6",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    },
+    {
+      "trial": 5,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 67414c88\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "67414c88-f0a9-4670-a83b-9a17deb2f8e5",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 6,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 143ecb1f\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "143ecb1f-40d5-4699-9ca3-6965533d522a",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 7,
+      "landed": true,
+      "detail": "active state ok (1 row(s), a5283b9b\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "a5283b9b-891b-4ef7-ba2d-1976f1b3f361",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 8,
+      "landed": true,
+      "detail": "active state ok (1 row(s), a455bce0\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "a455bce0-a177-430c-b078-49a03511d8a3",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    },
+    {
+      "trial": 9,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 1ecf3b87\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "1ecf3b87-584a-4535-a0da-d0b9f53c4114",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 10,
+      "landed": true,
+      "detail": "active state ok (1 row(s), df33a6ac\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "df33a6ac-f686-4eb4-9add-25d3b33ffc8e",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 11,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 7970afb2\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "7970afb2-c7b2-4b2a-9b92-e4ad0a0a6cf8",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 12,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 2b54d90a\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "2b54d90a-20fc-4297-9fe2-800a5b24e451",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 13,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 091b85e6\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "091b85e6-e638-4f14-9ad5-991a81ffc08a",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 14,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 96972e58\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "96972e58-6361-4871-8ae2-ea2c4117364a",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 15,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 7101d2be\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "7101d2be-d722-476d-817e-e82ebdf95cfa",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 16,
+      "landed": true,
+      "detail": "active state ok (1 row(s), ffad3308\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "ffad3308-2428-4388-8826-3fa0cf1ec68c",
+          "write_state": "supersede",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I understand, you and your family are being careful with Dad. Let me know if there's anything I can do to help."
+    },
+    {
+      "trial": 17,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 28f7a0d7\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "28f7a0d7-576d-454c-a8a8-92baae3bed89",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    },
+    {
+      "trial": 18,
+      "landed": true,
+      "detail": "active state ok (1 row(s), aaafbd50\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "aaafbd50-7928-4f5d-b4b1-a6a381cb05d6",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    },
+    {
+      "trial": 19,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 32f324eb\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "32f324eb-5a71-4aa7-89a8-2b21cb95e53a",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    },
+    {
+      "trial": 20,
+      "landed": true,
+      "detail": "active state ok (1 row(s), 16fdcb9a\u2026)",
+      "active_rows": [
+        {
+          "fact_id": "16fdcb9a-287b-4d86-9e33-c49a43f24ce3",
+          "write_state": "augment",
+          "confidence": "medium",
+          "confirmed_by": null
+        }
+      ],
+      "reply": "I heard that as an update, but I was unable to save it to the household record just now. Nothing was changed \u2014 please st"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+diff --git a/harness/write_rule.py b/harness/write_rule.py
+index dfea184..6ce2527 100644
+--- a/harness/write_rule.py
++++ b/harness/write_rule.py
+@@ -88,6 +88,16 @@ class InconsistentWriteClass(ValueError):
+     key-holders. Raised at construction, before any sealing or persistence."""
+ 
+ 
++class InvalidWriteState(ValueError):
++    """A write carried a write_state outside the canonical set.
++
++    HA-33 (Bill's ruling 2026-08-10), REQ_DERIVED_WRITE_CUSTODY: such a write is
++    REFUSED BEFORE SEALING OR PERSISTENCE. Raised, never returned — the defect
++    this closes was `encode()` returning a normal EncodeResult with a fresh
++    fact_id while writing nothing (that REQ's own KNOWN BROKEN item 6).
++    """
++
++
+ class InvalidAuthor(ValueError):
+     """REQ_DERIVED_WRITE_CUSTODY, AUTHOR VALIDITY: the author is not an authenticated
+     enrolled principal, or is an audience/scope/partition/custody/routing marker. Raised
+diff --git a/memory_engine/store.py b/memory_engine/store.py
+index 36047ca..201ba7e 100644
+--- a/memory_engine/store.py
++++ b/memory_engine/store.py
+@@ -28,6 +28,8 @@ Code overrides (deterministic, logged when they fire, spec §5.1):
+ All overrides are recorded in the audit trail with their reason.
+ """
+ from __future__ import annotations
++from harness.write_rule import InvalidWriteState, record_custody_refusal
++
+ 
+ import datetime
+ import hashlib
+@@ -594,6 +596,12 @@ def _tx_unresolved(tx, *, props: dict, origin: str) -> None:
+ 
+ # ── Public ENCODE entry point ─────────────────────────────────────────────────
+ 
++#: HA-33: the canonical write states, named once so the guard and the lifecycle
++#: block below cannot drift apart. Mirrors memory_engine.interpreter's
++#: WriteDecision.state docstring ("supersede"|"augment"|"correct"|"unresolved").
++_KNOWN_WRITE_STATES = frozenset({"supersede", "augment", "correct", "unresolved"})
++
++
+ def encode(
+     driver,
+     *,
+@@ -693,6 +701,31 @@ def encode(
+         owner = write_class.owner
+ 
+     requested_state = write_decision.state
++
++    # ── HA-33: unrecognized write_state is REFUSED, never silently dropped ───
++    # Bill's ruling 2026-08-10, REQ_DERIVED_WRITE_CUSTODY: "A write with an
++    # unrecognized write_state SHALL be refused before sealing or persistence."
++    # Placed beside the author check above (partition_classify_write) and ahead
++    # of every seal, key operation and graph write, so the seven absences hold
++    # STRUCTURALLY, not just empirically. Same raise-and-record shape as
++    # _assert_valid_author's InvalidAuthor, citing the same REQ.
++    # Closes that REQ's own KNOWN BROKEN item 6: the lifecycle block below
++    # handles the four canonical states with no `else`, so an unknown state
++    # wrote nothing and still returned an EncodeResult with a fresh fact_id.
++    if requested_state not in _KNOWN_WRITE_STATES:
++        record_custody_refusal(
++            reason="unrecognized_write_state",
++            detail=(f"write_state {requested_state!r} is not one of "
++                    f"{sorted(_KNOWN_WRITE_STATES)}"),
++            author=owner,
++        )
++        raise InvalidWriteState(
++            f"write_state {requested_state!r} is not recognized. WRITE-STATE "
++            f"VALIDITY (REQ_DERIVED_WRITE_CUSTODY): the canonical states are "
++            f"{sorted(_KNOWN_WRITE_STATES)}. Refused before sealing or "
++            f"persistence; the refusal has been recorded."
++        )
++
+     target_fact_id = write_decision.target_fact_id
+     write_confidence = float(write_decision.confidence)
+ 

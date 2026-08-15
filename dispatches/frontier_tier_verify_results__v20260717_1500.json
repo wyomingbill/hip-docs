@@ -1,0 +1,56 @@
+{
+  "verify_seed": "OK \u2014 no drift, no collision",
+  "d11_active_before": [
+    {
+      "fact_id": "c57328e9-2fd7-475b-8054-9b95d68c7573",
+      "valid_to": null,
+      "value": "R-1-18"
+    }
+  ],
+  "t04_gate_reply": {
+    "response": "Answering that well means sending some of your household facts to an outside model. Here's exactly what would go:\n- address (CONFIRMED, 456f3c73-8c6c-46b1-8211-d63f70ea5fb0)\n- zone_district (CONFIRMED, c57328e9-2fd7-475b-8054-9b95d68c7573)\nWant me to go ahead?",
+    "routing": null
+  },
+  "t04_decline_reply": {
+    "response": "Keeping that local, then.",
+    "routing": null
+  },
+  "d11_active_after_decline": [
+    {
+      "fact_id": "c57328e9-2fd7-475b-8054-9b95d68c7573",
+      "valid_to": null,
+      "value": "R-1-18"
+    }
+  ],
+  "t04b_approve_reply": {
+    "response": "I couldn't reach the outside model just now \u2014 keeping that local for the moment.",
+    "routing": null
+  },
+  "d11_active_after_approve_attempt": [
+    {
+      "fact_id": "c57328e9-2fd7-475b-8054-9b95d68c7573",
+      "valid_to": null,
+      "value": "R-1-18"
+    }
+  ],
+  "synthetic_write_fact_id": "d4b07297-63d3-41ad-9222-2f1b33ca6238",
+  "synthetic_write_rung": "Trust(fact_id='d4b07297-63d3-41ad-9222-2f1b33ca6238', level='ASSERTED', basis=\"write_state='augment' AND confidence='medium' AND not derived\", stale=False, inputs={'derived': False, 'confirmed_by': None, 'confidence': 'medium', 'write_state': 'augment', 'confidence_log_len': 1, 'has_harden_transition': False, 'last_accessed': None, 'recorded_at': '2026-07-17T20:39:14.505995+00:00'})",
+  "synthetic_write_props": {
+    "write_state": "augment",
+    "confidence": "medium",
+    "valid_to": null
+  },
+  "d11_and_new_fact_coexist": [
+    {
+      "fact_id": "c57328e9-2fd7-475b-8054-9b95d68c7573",
+      "valid_to": null,
+      "value": "R-1-18"
+    },
+    {
+      "fact_id": "d4b07297-63d3-41ad-9222-2f1b33ca6238",
+      "valid_to": null,
+      "value": "Setback requirements for R-1-18: front 25ft, side 7.5ft, rear 15ft. A variance for encroachment would require a Board of Adjustment hearing."
+    }
+  ],
+  "t05_summary": "Your house is currently within the setback requirements, but if you need to encroach, you'd have to request a variance through a Board of Adjustment hearing. I'll email the full details."
+}

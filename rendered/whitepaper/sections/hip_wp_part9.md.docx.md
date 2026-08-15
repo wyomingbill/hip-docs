@@ -1,0 +1,37 @@
+Part IX: Why Now
+Every argument in this document has been structural. The model commoditizes. Compute gets more expensive. Inference must live close to the home, in secured and powered facilities. Cable owns those facilities. The economics work. The moat compounds. None of that, on its own, explains urgency. A structural advantage that will still be there in three years invites waiting. This section explains why waiting is the one move that forfeits the advantage, and why the window to act is open now and closing.
+The position is real, and it is undefended
+The cable operator holds a position almost no one else can hold: secured, powered, low-latency facilities close to tens of millions of homes, an existing billing and trust relationship with the household, and the operational capacity to run distributed infrastructure at national scale. Part VII documented that this is not theoretical. The facilities exist in the thousands, and the operators have begun deploying inference into them with NVIDIA.
+
+But a position that is real is not the same as a position that is defended. The operator holds the ground by default, not by intent. There is no household context-and-trust layer deployed on that infrastructure today. The AI Grid trials run point applications, ad delivery, video, enterprise vision, not a persistent, private, multi-member household platform. The single most valuable thing the operator could build on its own edge, the compounding household relationship, is the thing no one has built. The asset is held, and the slot on top of it is empty.
+
+An undefended position in a contested market is not a stable asset. It is an opportunity that belongs to whoever claims it first.
+The contestants are arriving
+The slot is empty, but it is not unnoticed. The same structural forces that make the household the prize are visible to everyone, and multiple well-capitalized parties are moving toward it from different directions.
+
+The frontier labs are building personal context at the individual level and have every incentive to extend it into the home. The device makers reach into the household through hardware and have the customer relationship to push an assistant deeper. The distributed-compute and edge-AI players are assembling capacity and looking for the applications that justify it. NVIDIA has built the AI Grid and is actively seeking the killer applications that make operators deploy more of it. None of these has yet planted the household context-and-trust layer, but each is closer to the household every quarter, and each has more capital and more momentum than a standing start would suggest.
+
+The threat is not that a competitor has a better model. Part IV showed the model does not matter. The threat is that a competitor establishes the household relationship first, accumulates the context, and builds the switching cost, on the operator's own infrastructure or around it, while the operator treats its edge as a cost center rather than the foundation of a platform. The moat in Part II compounds for whoever starts building it. Right now, no one is. That will not last.
+The window is defined by the moat, not the technology
+Here is the precise reason timing is decisive, and it follows directly from the nature of the moat. The defensible asset is accumulated household context, and context compounds only with time. It cannot be acquired faster than it is built. That property, which makes the moat durable once established, is exactly what makes the timing unforgiving before it is established.
+
+Whoever begins accumulating household context first starts a clock that a later entrant cannot reset. A competitor who arrives two years late with identical technology still faces two years of context they cannot reconstruct, on a household that has already integrated the incumbent into its daily life. The advantage does not go to the best technology. It goes to the earliest credible mover, because the asset is time itself. Every quarter the operator waits is a quarter of compounding context it forfeits to whoever moves instead, and a quarter that cannot be bought back later at any price.
+
+This is the difference between this opportunity and an ordinary technology decision. Most technology can be adopted late and caught up. A compounding-context platform cannot. The window is not open because the technology is briefly available. It is open because the context has not yet been claimed, and it closes the moment someone else starts claiming it.
+The conditions are aligned now, and they will not stay aligned quietly
+The timing argument is reinforced by the convergence the rest of the document established. The forces are aligned now in a way that will not wait.
+
+The model layer is cheap and capable now, so the platform is economical to build today rather than someday. The memory and compute economics favor the edge now, while the cost of the centralized alternative inflates. The socio-political forces in Part III, the care crisis, the datacenter backlash, the privacy reactivation, the trust collapse, are active now and building, creating demand and legitimacy for exactly this kind of platform. And the substrate is being deployed now: NVIDIA and the operators are putting GPUs into edge facilities as this is written. Every one of these conditions is favorable simultaneously, which is rare, and none of them is static. The model will keep improving for everyone. The edge will keep being built by someone. The demand will keep growing and will be met by whoever is positioned to meet it.
+
+A convergence of favorable conditions is not a standing invitation. It is a window. The operator that recognizes it as such, and moves while the position is undefended, the context unclaimed, and the substrate already going in, captures a platform. The operator that treats it as a trend to monitor watches the same forces hand the household to someone else.
+What closes if cable waits
+State the downside plainly, because it is the real motivation. If the operator does nothing, the most likely outcome is not that the opportunity disappears. It is that someone else takes it, using infrastructure the operator owns or infrastructure that routes around it, and the operator is left exactly where it has been left before: owning the pipe, carrying the traffic, and monetizing none of the relationship that rides on top.
+
+The industry has watched this happen. It owned the broadband into the home and watched the streaming platforms capture the value. It owned the connection and watched the device makers and the hyperscalers own the customer. The household AI relationship is the next iteration of the same pattern, and this time the operator starts with a genuine structural advantage, the secured, powered, near-home edge, that none of the prior winners had. To hold that advantage and still lose the relationship would be the most expensive kind of inaction, because it forfeits a position the competitors would have to spend years and billions to build, and hands it over for free.
+
+The window is open. The position is held but undefended. The context is unclaimed. The substrate is going in. The forces are aligned. None of that persists. That is why now, and the final question is only who builds it, which is the subject of the last section.
+
+
+
+Part IX carries no data tables; its argument rests on the verified evidence assembled in Parts III through VIII. Sources for every factual claim referenced here appear in the corresponding section and in the consolidated References.
+
